@@ -4,6 +4,10 @@ DiscoveryOS is an automated product intelligence engine that parses unstructured
 
 It leverages the new `google-genai` SDK and Pydantic (v2) validation models to enforce strict schemas on LLM outputs, including fallback routines and thinking configuration support.
 
+## 🌐 Live Web Portal
+Access the live glassmorphic web dashboard directly:
+👉 **[https://discoveryos-m1v3.onrender.com](https://discoveryos-m1v3.onrender.com)**
+
 ## 🚀 Features
 - **Structured JSON schemas**: Strictly validated via Pydantic v2.
 - **Robust Model Fallbacks**: Automatically fall back to alternative Gemini models if the requested preview model is unavailable.
@@ -50,7 +54,10 @@ python render_dashboard.py
 ---
 
 ## 📁 Repository Structure
+- `app.py`: FastAPI server serving static layouts and hosting `/api/chat` and `/api/jira/create` endpoints.
+- `static/`: HTML, CSS, and JS web dashboard frontend codes.
 - `data_ingest.json`: Mock database of unstructured customer feedback items.
 - `discovery_engine.py`: AI extraction, reasoning, and local schema validation.
 - `render_dashboard.py`: Parses the JSON matrix and renders the presentation dashboard.
 - `DASHBOARD.md`: Generated intelligence dashboard markdown report.
+- `docs/`: Technical specifications containing the [implementation_plan.md](docs/implementation_plan.md), [walkthrough.md](docs/walkthrough.md), and [task.md](docs/task.md) checklists.
