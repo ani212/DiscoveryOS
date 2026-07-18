@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DiscoveryOS - Product Intelligence Portal</title>
+  <!-- Google Fonts for Modern Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+  <!-- Background Gradients -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="logo">
+        <span class="icon">🧠</span>
+        <h1>DiscoveryOS</h1>
+      </div>
+      <p class="tagline">Automated AI-Driven Product Intelligence & Prioritization Engine</p>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="workspace-grid">
+      <!-- Input Panel -->
+      <section class="panel glass-panel ingest-section">
+        <h2>📥 Ingest Feedback</h2>
+        <p class="panel-desc">Paste unstructured feedback (interviews, chats, survey responses) or load mock records to get started.</p>
+        
+        <div class="form-group">
+          <label for="feedback-input">Unstructured Feedback Records</label>
+          <textarea id="feedback-input" placeholder="Paste unstructured user reviews, support tickets or survey results here..."></textarea>
+        </div>
+
+        <div class="options-row">
+          <div class="form-group model-selector-group">
+            <label for="model-select">Model Configuration</label>
+            <select id="model-select">
+              <option value="gemini-3.5-flash">(Recommended) Gemini 3.5 Flash</option>
+              <option value="gemini-2.0-flash">Gemini 2.0 Flash</option>
+              <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+              <option value="antigravity-preview-05-2026">antigravity-preview-05-2026</option>
+            </select>
+          </div>
+          
+          <button id="btn-prefill" class="btn btn-secondary">
+            <span class="btn-icon">📋</span> Load Mock Data
+          </button>
+        </div>
+
+        <button id="btn-run" class="btn btn-primary">
+          <span class="btn-icon">⚡</span> Run Product Intelligence
+        </button>
+      </section>
+
+      <!-- Output Panel -->
+      <section class="panel glass-panel results-section">
+        <div class="results-header">
+          <h2>📊 Prioritization Analysis</h2>
+          <div class="status-badge-container">
+            <span id="status-badge" class="badge badge-inactive">No Matrix Generated</span>
+          </div>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading-state" class="hidden">
+          <div class="loader-spinner"></div>
+          <p>Processing feedback via Google Gemini...</p>
+          <div class="skeleton-bar long animate-pulse"></div>
+          <div class="skeleton-bar medium animate-pulse"></div>
+          <div class="skeleton-bar short animate-pulse"></div>
+        </div>
+
+        <!-- Initial Placeholder State -->
+        <div id="placeholder-state" class="empty-state">
+          <div class="empty-icon">📈</div>
+          <h3>Awaiting Feedback Ingestion</h3>
+          <p>Enter data on the left panel and click 'Run Product Intelligence' to generate the quantitative prioritization matrix and strategic roadmap directive.</p>
+        </div>
+
+        <!-- Output Content -->
+        <div id="output-content" class="hidden">
+          <!-- KPI Metrics Grid -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <span class="kpi-num" id="kpi-total-items">0</span>
+              <span class="kpi-label">Items Analyzed</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-num" id="kpi-max-severity">-</span>
+              <span class="kpi-label">Max Severity</span>
+            </div>
+            <div class="kpi-card">
+              <span class="kpi-num" id="kpi-features-count">0</span>
+              <span class="kpi-label">Feature Areas</span>
+            </div>
+          </div>
+
+          <!-- Strategic Focus -->
+          <div class="strategic-focus-container">
+            <h3>🎯 Strategic Focus Brief</h3>
+            <blockquote id="strategic-brief-text">
+              Loading focus brief...
+            </blockquote>
+          </div>
+
+          <!-- Prioritization Table -->
+          <h3>📋 Quantitative Prioritization Matrix</h3>
+          <div class="table-wrapper">
+            <table id="matrix-table">
+              <thead>
+                <tr>
+                  <th>Feature Area</th>
+                  <th>Segment</th>
+                  <th>Severity</th>
+                  <th>Business Impact</th>
+                  <th>Roadmap Action Directive</th>
+                </tr>
+              </thead>
+              <tbody id="matrix-tbody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
