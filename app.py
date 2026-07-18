@@ -231,6 +231,8 @@ def create_jira_ticket(payload: JiraRequest):
             "jira_key": ticket_key,
             "jira_url": f"https://jira.atlassian.com/browse/{ticket_key}"
         }
+    except HTTPException as he:
+        raise he
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 

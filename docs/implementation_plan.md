@@ -1,68 +1,49 @@
-# DiscoveryOS Advanced PM Features Plan
+# DiscoveryOS Export & Sharing Features Plan
 
-We are adding advanced product management workflows to **DiscoveryOS**:
-1. **Semantic Aggregation & Volume Tracking**: The Pydantic model will group complaints and output user counts (`feedback_count`) and lists of affected user emails (`associated_emails`).
-2. **"Ask My Feedback" AI RAG Chat**: A backend endpoint `/api/chat` using Gemini to query the feedback database in real time.
-3. **Mock Jira Ticket Integrations**: A backend endpoint `/api/jira/create` to simulate ticket creations, linking them inside the prioritization matrix.
-4. **Enhanced UI**: Adding a RAG chat console, volume markers, and a "Create Jira Ticket" button column to the dashboard.
+We are adding structured sharing and export tools to **DiscoveryOS**, focusing on **high readability, clean layouts, and non-confusing user interfaces**.
 
 ---
 
 ## User Review Required
 
-1. **Jira Integration**: Since we do not have live Jira credentials, the Jira API calls will be mocked. It will generate a realistic project ticket key (e.g., `DISC-101`) and standard Jira URL, saving the ticket status into `prioritized_matrix.json` dynamically.
-2. **Schema Upgrade**: The Pydantic schema will be updated to include `feedback_count`, `associated_emails`, and optional `jira_key` variables.
+* **Client-Side Processing**: We will build these tools using client-side JavaScript and CSS print configurations. This guarantees zero server lag, instantaneous downloads, and maximum reliability.
+* **Aesthetic Focus (Clean Business Style)**: 
+  - The printed/saved PDF layout will convert to a high-contrast corporate brief style (black text, clean gridlines, no dark backgrounds) to ensure perfect printing on paper.
+  - Buttons will feature descriptive labels (e.g., *"📄 Export PDF Report"* instead of just *"PDF"*) to be completely self-explanatory.
 
 ---
 
 ## Proposed Changes
 
-### Component: AI Engine & Data Models
-
-#### [MODIFY] [discovery_engine.py](file:///e:/WORK/Antigravity/DiscoveryOS/discovery_engine.py)
-* Update `FeedbackItem` schema:
-  - Add `feedback_count: int` (number of similar complaints).
-  - Add `associated_emails: List[str]` (emails of users who complained about this).
-  - Add `jira_key: Optional[str] = None` (linked Jira ticket ID).
-
-### Component: FastAPI Backend Server
-
-#### [MODIFY] [app.py](file:///e:/WORK/Antigravity/DiscoveryOS/app.py)
-* Add `POST /api/chat` endpoint:
-  - Takes a user prompt.
-  - Sends a context-aware prompt to Gemini combining all customer feedback and the generated matrix.
-  - Returns the AI-generated answer.
-* Add `POST /api/jira/create` endpoint:
-  - Takes a `feature_area` and `product_action`.
-  - Generates a ticket key (e.g., `DISC-101`).
-  - Updates the corresponding item in `prioritized_matrix.json` to persist the `jira_key`.
-
-### Component: Interactive Dashboard UI
+### Component: Dashboard UI & Styling
 
 #### [MODIFY] [static/index.html](file:///e:/WORK/Antigravity/DiscoveryOS/static/index.html)
-* Update table headers to include **Volume** and **Action**.
-* Add a new section **💬 Chat with Product Feedback** below the matrix table containing a chat logs feed and input field.
+* Add an **Export & Sharing Toolbar** inside the results panel header.
+* Include descriptive action buttons:
+  - `[📄 Export PDF Report]`
+  - `[📊 Download Excel/CSV]`
+  - `[📋 Copy Notion Markdown]`
 
 #### [MODIFY] [static/style.css](file:///e:/WORK/Antigravity/DiscoveryOS/static/style.css)
-* Add styling for chat container, user/system message bubbles, and action buttons.
-* Add hover states for interactive rows showing affected users.
+* Style the sharing toolbar to fit cleanly inside the header.
+* Add a comprehensive `@media print` style block:
+  - Automatically hides inputs, panels, scrollbars, and buttons.
+  - Switches the dark-theme colors to standard document formats (charcoal text on clean white pages).
+  - Handles table page-breaks (`page-break-inside: avoid`) to prevent rows from being split across page sheets.
 
 #### [MODIFY] [static/app.js](file:///e:/WORK/Antigravity/DiscoveryOS/static/app.js)
-* Update table builder to render volume counts and Jira buttons.
-* Implement AJAX request for creating Jira tickets and updating the specific row dynamically.
-* Implement chat form submission to `/api/chat` showing a typing indicator.
+* Connect event listeners to compile and format structured outputs:
+  - **Export PDF Report**: Opens browser print options.
+  - **Download CSV**: Generates a clean table with appropriate CSV columns (Feature, Segment, Severity, Volume, Business Impact, Product Action) for Excel.
+  - **Copy Notion Markdown**: Copies a fully formatted table block. Temporarily changes button text to `[✓ Copied!]` for clear user feedback.
 
 ---
 
 ## Verification Plan
 
-### Automated / CLI Verification
-1. Re-run `discovery_engine.py` to confirm the schema upgrade parses correctly.
-2. Run the FastAPI server: `.\venv\Scripts\python app.py`.
-
 ### Manual / Browser Verification
-1. Visit `http://localhost:8000`.
-2. Load mock data and run analysis.
-3. Check if the table displays **Volume** (e.g. `👥 1 user`) and a **[🎫 Create Ticket]** button.
-4. Click **Create Ticket**, verify it displays a link to Jira (e.g. `DISC-101`), and check `prioritized_matrix.json` to verify the state persisted.
-5. Paste a query into the feedback chat box (e.g., *"Why are growth users unhappy?"*) and verify the AI response is displayed.
+1. Visit the local dashboard (`http://localhost:8000`).
+2. Run an analysis to populate the table.
+3. Click **Download Excel/CSV**: Confirm the file is readable and columns match.
+4. Click **Copy Notion Markdown**: Verify that pasting into Notion or Slack displays a clean grid table.
+5. Click **Export PDF Report**: Inspect the print layout preview to ensure it is clean, legible, and formatted like a professional document.

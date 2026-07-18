@@ -1,10 +1,8 @@
-# DiscoveryOS Advanced PM Features Tasks
+# DiscoveryOS Sharing & Export Tasks
 
-- [x] Modify `discovery_engine.py` schema to support Volume and Jira tracking
-- [x] Implement backend chat and ticket endpoints in `app.py`
-- [x] Update frontend structure in `static/index.html`
-- [x] Style chat component and pills in `static/style.css`
-- [x] Connect chat and ticket actions in `static/app.js`
-- [x] Run scripts and verify local endpoints
-- [x] Push updates to standalone GitHub repository
-- [x] Update final walkthrough report
+- [ ] Add export button toolbar to `static/index.html`
+- [ ] Add `@media print` layout and styling to `static/style.css`
+- [ ] Implement client-side PDF, CSV, and Markdown exports in `static/app.js`
+- [ ] Test the exports locally and check formatting
+- [ ] Push updates to the standalone GitHub repository
+- [ ] Document final changes in walkthrough.md

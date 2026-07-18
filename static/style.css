@@ -670,3 +670,156 @@ tr:hover td {
   max-width: 140px;
 }
 
+/* Sharing Toolbar Layout */
+.sharing-toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-share {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-glass);
+  color: var(--text-primary);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-share:hover {
+  background: rgba(139, 92, 246, 0.1);
+  border-color: var(--primary-color);
+  color: var(--accent-violet);
+  transform: translateY(-1px);
+}
+
+.btn-share:active {
+  transform: translateY(0);
+}
+
+/* Print Media Styles - formats layout for professional paper printing/PDF save */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    padding: 0 !important;
+  }
+
+  /* Hide background glow blobs and inputs */
+  .bg-glow,
+  .app-header p,
+  .ingest-section,
+  .sharing-toolbar,
+  .btn-jira-create,
+  .chat-section-container,
+  #status-badge {
+    display: none !important;
+  }
+
+  /* Make output span full width */
+  .workspace-grid {
+    display: block !important;
+  }
+
+  .results-section {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Clean header for report */
+  .logo h1 {
+    -webkit-text-fill-color: #0f172a !important;
+    color: #0f172a !important;
+    font-size: 26pt !important;
+    margin-bottom: 15px !important;
+  }
+
+  /* KPI blocks layout in print */
+  .kpi-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 15px !important;
+    margin-bottom: 25px !important;
+  }
+
+  .kpi-card {
+    background: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    color: #0f172a !important;
+  }
+
+  .kpi-num {
+    -webkit-text-fill-color: #0f172a !important;
+    color: #0f172a !important;
+  }
+
+  /* Strategic brief box styling */
+  .strategic-focus-container {
+    background: #f8fafc !important;
+    border-left: 4px solid #6366f1 !important;
+    color: #0f172a !important;
+    padding: 15px !important;
+  }
+
+  #strategic-brief-text {
+    color: #334155 !important;
+  }
+
+  /* Table styling for print */
+  .table-wrapper {
+    border: 1px solid #cbd5e1 !important;
+  }
+
+  table {
+    background: transparent !important;
+    color: #0f172a !important;
+  }
+
+  th {
+    background: #f1f5f9 !important;
+    color: #475569 !important;
+    border-bottom: 2px solid #cbd5e1 !important;
+    padding: 10px !important;
+  }
+
+  td {
+    border-bottom: 1px solid #e2e8f0 !important;
+    padding: 10px !important;
+  }
+
+  tr {
+    page-break-inside: avoid !important;
+  }
+
+  .volume-count {
+    color: #0f172a !important;
+  }
+
+  .email-list-tooltip {
+    color: #64748b !important;
+    white-space: normal !important;
+    max-width: none !important;
+  }
+
+  /* Persisted Jira Key */
+  .jira-badge-link {
+    background: transparent !important;
+    color: #0284c7 !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+}
+
+

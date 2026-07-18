@@ -67,6 +67,9 @@ document.addEventListener("DOMContentLoaded", () => {
    * Renders the prioritization matrix payload inside the dashboard.
    */
   function renderAnalysisResult(matrix) {
+    // Save local copy for export actions
+    activeMatrix = matrix;
+
     // 1. Update status badge
     statusBadge.textContent = "Analysis Complete";
     statusBadge.className = "badge badge-active";
@@ -281,6 +284,90 @@ document.addEventListener("DOMContentLoaded", () => {
   chatInput.addEventListener("keypress", (e) => {
     if (e.key === "Enter") {
       sendChatMessage();
+    }
+  });
+
+  // Sharing & Export Buttons
+  const btnExportPdf = document.getElementById("btn-export-pdf");
+  const btnExportCsv = document.getElementById("btn-export-csv");
+  const btnCopyMarkdown = document.getElementById("btn-copy-markdown");
+
+  let activeMatrix = null;
+
+  // PDF Export
+  btnExportPdf.addEventListener("click", () => {
+    window.print();
+  });
+
+  // CSV Export
+  btnExportCsv.addEventListener("click", () => {
+    if (!activeMatrix || !activeMatrix.items) {
+      alert("No prioritized data available to export.");
+      return;
+    }
+
+    const items = activeMatrix.items;
+    const headers = ["Feature Area", "User Segment", "Severity", "Volume", "Business Impact", "Product Action Directive", "Jira Key"];
+    const rows = items.map(item => [
+      `"${item.feature_area.replace(/"/g, '""')}"`,
+      `"${item.user_segment.replace(/"/g, '""')}"`,
+      item.severity,
+      item.feedback_count || 1,
+      `"${item.business_impact.replace(/"/g, '""')}"`,
+      `"${item.product_action.replace(/"/g, '""')}"`,
+      `"${(item.jira_key || '').replace(/"/g, '""')}"`
+    ]);
+
+    const csvContent = [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "prioritization_matrix.csv");
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+
+  // Markdown Export
+  btnCopyMarkdown.addEventListener("click", async () => {
+    if (!activeMatrix || !activeMatrix.items) {
+      alert("No prioritized data available to copy.");
+      return;
+    }
+
+    const items = activeMatrix.items;
+    const sorted = [...items].sort((a, b) => b.severity - a.severity);
+
+    // Build Markdown Table
+    let md = "| Feature Area | Segment | Severity | Volume | Business Impact | Product Action Directive | Jira Key |\n";
+    md += "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |\n";
+    
+    sorted.forEach(item => {
+      const jira = item.jira_key ? `[${item.jira_key}](https://jira.atlassian.com/browse/${item.jira_key})` : '-';
+      md += `| **${item.feature_area}** | ${item.user_segment} | ${item.severity} | ${item.feedback_count || 1} | ${item.business_impact} | ${item.product_action} | ${jira} |\n`;
+    });
+
+    try {
+      await navigator.clipboard.writeText(md);
+      
+      const copyTextEl = document.getElementById("copy-markdown-text");
+      const copyIconEl = document.getElementById("copy-markdown-icon");
+      
+      const originalText = copyTextEl.textContent;
+      const originalIcon = copyIconEl.textContent;
+      
+      copyTextEl.textContent = "Copied!";
+      copyIconEl.textContent = "✓";
+      
+      setTimeout(() => {
+        copyTextEl.textContent = originalText;
+        copyIconEl.textContent = originalIcon;
+      }, 2000);
+    } catch (err) {
+      alert("Failed to copy table: " + err.message);
     }
   });
 
