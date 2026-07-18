@@ -1,0 +1,20 @@
+[
+  {
+    "feedback_id": "FB-001",
+    "source": "Enterprise Support Ticket",
+    "user_email": "admin@megacorp.com",
+    "text": "Our team is extremely frustrated with the PDF export functionality. Whenever we try to export reports with more than 50 pages, the request consistently times out with a 504 error. This is blocking our weekly executive reviews, and if not resolved by next week, we will have to look at alternative solutions since reporting is a core requirement for our compliance department."
+  },
+  {
+    "feedback_id": "FB-002",
+    "source": "Growth Portal Feedback",
+    "user_email": "growth_user_99@gmail.com",
+    "text": "I really love the analytics tool, but it's super hard to use at night. There is no dark mode setting! It's blindingly bright. Can you guys please add a toggle for dark mode? All the modern web apps have this. It makes a huge difference for late-night productivity."
+  },
+  {
+    "feedback_id": "FB-003",
+    "source": "Churn Survey",
+    "user_email": "ex_user_val@startup.io",
+    "text": "I decided to cancel my trial because I couldn't even finish signing up. The onboarding email verification kept failing with domain validation errors for our email domain. I tried contacting support but got no response. If onboarding is this buggy, I can't trust the rest of your system with our company data. Moving to a competitor."
+  }
+]

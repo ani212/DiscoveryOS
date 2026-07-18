@@ -1,0 +1,56 @@
+# DiscoveryOS 🧠
+
+DiscoveryOS is an automated product intelligence engine that parses unstructured customer feedback (support tickets, portal requests, churn surveys) and outputs a quantitative prioritization matrix, along with a presentation-ready markdown dashboard.
+
+It leverages the new `google-genai` SDK and Pydantic (v2) validation models to enforce strict schemas on LLM outputs, including fallback routines and thinking configuration support.
+
+## 🚀 Features
+- **Structured JSON schemas**: Strictly validated via Pydantic v2.
+- **Robust Model Fallbacks**: Automatically fall back to alternative Gemini models if the requested preview model is unavailable.
+- **Thinking Budget Config**: Utilizes the thinking capability of Gemini models (e.g. `gemini-3.5-flash`) for deep, strategic PM summaries.
+- **Markdown Dashboard**: Renders a beautiful report with blockquotes, KPI metrics, and a prioritization matrix sorted by severity.
+
+---
+
+## 🛠️ Getting Started
+
+### 1. Installation
+Clone the repository and install the dependencies in a virtual environment:
+```bash
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment (Windows)
+.\venv\Scripts\activate
+
+# Install requirements
+pip install -r requirements.txt
+```
+
+### 2. Configuration
+Create a `.env` file in the root folder and add your Gemini API key:
+```env
+GEMINI_API_KEY=your_gemini_api_key_here
+```
+
+### 3. Usage
+
+#### Run the prioritize engine:
+Parse unstructured inputs from `data_ingest.json` and generate `prioritized_matrix.json`:
+```bash
+python discovery_engine.py
+```
+
+#### Generate the presentation-ready dashboard:
+Convert the prioritization matrix to a beautiful dashboard file `DASHBOARD.md`:
+```bash
+python render_dashboard.py
+```
+
+---
+
+## 📁 Repository Structure
+- `data_ingest.json`: Mock database of unstructured customer feedback items.
+- `discovery_engine.py`: AI extraction, reasoning, and local schema validation.
+- `render_dashboard.py`: Parses the JSON matrix and renders the presentation dashboard.
+- `DASHBOARD.md`: Generated intelligence dashboard markdown report.
