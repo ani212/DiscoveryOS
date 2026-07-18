@@ -120,14 +120,33 @@
                   <th>Feature Area</th>
                   <th>Segment</th>
                   <th>Severity</th>
+                  <th>Volume</th>
                   <th>Business Impact</th>
                   <th>Roadmap Action Directive</th>
+                  <th>Integrations</th>
                 </tr>
               </thead>
               <tbody id="matrix-tbody">
                 <!-- Injected via JavaScript -->
               </tbody>
             </table>
+          </div>
+
+          <!-- Chat with Product Feedback -->
+          <div class="chat-section-container">
+            <h3>💬 Ask My Feedback (Gemini RAG Assistant)</h3>
+            <p class="panel-desc">Query your feedback database and prioritization matrix in plain English.</p>
+            <div class="chat-box" id="chat-box">
+              <div class="chat-log" id="chat-log">
+                <div class="chat-msg chat-msg-system">
+                  Hello! Ask me anything about the customer feedback database. (e.g., "Summarize enterprise complaints" or "Why are users churning?")
+                </div>
+              </div>
+              <div class="chat-input-row">
+                <input type="text" id="chat-input" placeholder="Type your query about customer feedback here..." />
+                <button id="btn-chat-send" class="btn btn-primary">Ask AI</button>
+              </div>
+            </div>
           </div>
         </div>
       </section>

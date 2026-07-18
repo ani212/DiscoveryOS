@@ -522,3 +522,151 @@ tr:hover td {
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.8; }
 }
+
+/* Chat Assistant Panel */
+.chat-section-container {
+  margin-top: 36px;
+  border-top: 1px solid var(--border-glass);
+  padding-top: 28px;
+}
+
+.chat-box {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-log {
+  max-height: 240px;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.chat-msg {
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  max-width: 85%;
+  line-height: 1.45;
+  word-wrap: break-word;
+}
+
+.chat-msg-system {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  align-self: center;
+  text-align: center;
+  font-size: 0.8rem;
+  max-width: 95%;
+  border: 1px dashed var(--border-glass);
+}
+
+.chat-msg-user {
+  background: var(--primary-glow);
+  color: white;
+  align-self: flex-end;
+  border-bottom-right-radius: 2px;
+}
+
+.chat-msg-ai {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+  align-self: flex-start;
+  border-bottom-left-radius: 2px;
+  border: 1px solid var(--border-glass);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 10px;
+}
+
+#chat-input {
+  flex-grow: 1;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 12px 16px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+#chat-input:focus {
+  border-color: var(--primary-color);
+  background: rgba(0, 0, 0, 0.45);
+}
+
+#btn-chat-send {
+  width: auto;
+  padding: 0 24px;
+}
+
+/* Jira Action Buttons and Badges */
+.btn-jira-create {
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--accent-violet);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-jira-create:hover {
+  background: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.jira-badge-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(14, 165, 233, 0.15);
+  color: #38bdf8;
+  border: 1px solid rgba(14, 165, 233, 0.4);
+  padding: 3px 8px;
+  font-size: 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.jira-badge-link:hover {
+  background: #0ea5e9;
+  color: white;
+  box-shadow: 0 0 8px rgba(14, 165, 233, 0.3);
+}
+
+/* Volume indicators and sub-texts */
+.volume-count {
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+.email-list-tooltip {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+

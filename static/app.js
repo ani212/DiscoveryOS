@@ -105,17 +105,56 @@ document.addEventListener("DOMContentLoaded", () => {
       const tdSev = document.createElement("td");
       tdSev.innerHTML = `<span class="sev-pill sev-${item.severity}">${getSeverityLabel(item.severity)}</span>`;
       
+      const tdVolume = document.createElement("td");
+      const count = item.feedback_count || 1;
+      const emails = item.associated_emails || [];
+      const tooltip = emails.length > 0 ? `<span class="email-list-tooltip" title="${emails.join(', ')}">${emails.join(', ')}</span>` : '';
+      tdVolume.innerHTML = `<span class="volume-count">👥 ${count}</span>${tooltip}`;
+      
       const tdImpact = document.createElement("td");
       tdImpact.textContent = item.business_impact;
       
       const tdAction = document.createElement("td");
       tdAction.textContent = item.product_action;
+
+      const tdIntegrations = document.createElement("td");
+      if (item.jira_key) {
+        tdIntegrations.innerHTML = `<a href="https://jira.atlassian.com/browse/${item.jira_key}" target="_blank" class="jira-badge-link">🎫 ${item.jira_key}</a>`;
+      } else {
+        const btnJira = document.createElement("button");
+        btnJira.className = "btn-jira-create";
+        btnJira.textContent = "🎫 Create Ticket";
+        btnJira.addEventListener("click", async () => {
+          btnJira.disabled = true;
+          btnJira.textContent = "Creating...";
+          try {
+            const res = await fetch("/api/jira/create", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                feature_area: item.feature_area,
+                product_action: item.product_action
+              })
+            });
+            if (!res.ok) throw new Error("Failed to create Jira ticket.");
+            const jiraResult = await res.json();
+            tdIntegrations.innerHTML = `<a href="${jiraResult.jira_url}" target="_blank" class="jira-badge-link">🎫 ${jiraResult.jira_key}</a>`;
+          } catch (err) {
+            alert(err.message);
+            btnJira.disabled = false;
+            btnJira.textContent = "🎫 Create Ticket";
+          }
+        });
+        tdIntegrations.appendChild(btnJira);
+      }
       
       tr.appendChild(tdArea);
       tr.appendChild(tdSegment);
       tr.appendChild(tdSev);
+      tr.appendChild(tdVolume);
       tr.appendChild(tdImpact);
       tr.appendChild(tdAction);
+      tr.appendChild(tdIntegrations);
       
       matrixTbody.appendChild(tr);
     });
@@ -187,6 +226,61 @@ document.addEventListener("DOMContentLoaded", () => {
     } finally {
       btnRun.disabled = false;
       btnPrefill.disabled = false;
+    }
+  });
+
+  // Chat Elements
+  const chatInput = document.getElementById("chat-input");
+  const btnChatSend = document.getElementById("btn-chat-send");
+  const chatLog = document.getElementById("chat-log");
+
+  async function sendChatMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+
+    // Append user message
+    const userMsgDiv = document.createElement("div");
+    userMsgDiv.className = "chat-msg chat-msg-user";
+    userMsgDiv.textContent = message;
+    chatLog.appendChild(userMsgDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    chatInput.value = "";
+    btnChatSend.disabled = true;
+
+    // Append AI placeholder
+    const aiMsgDiv = document.createElement("div");
+    aiMsgDiv.className = "chat-msg chat-msg-ai";
+    aiMsgDiv.innerHTML = "<em>Thinking...</em>";
+    chatLog.appendChild(aiMsgDiv);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: message,
+          model: modelSelect.value
+        })
+      });
+
+      if (!response.ok) throw new Error("Failed to reach AI chat API.");
+      const chatData = await response.json();
+
+      aiMsgDiv.textContent = chatData.response;
+    } catch (err) {
+      aiMsgDiv.textContent = `Error: ${err.message}`;
+    } finally {
+      btnChatSend.disabled = false;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+  }
+
+  btnChatSend.addEventListener("click", sendChatMessage);
+  chatInput.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+      sendChatMessage();
     }
   });
 

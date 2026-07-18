@@ -11,7 +11,7 @@ import os
 import json
 import argparse
 import sys
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel, Field, ValidationError
 from dotenv import load_dotenv
 
@@ -52,6 +52,18 @@ class FeedbackItem(BaseModel):
     business_impact: str = Field(
         ..., 
         description="Description of the business impact (e.g., risk of churn, revenue loss, low user engagement)."
+    )
+    feedback_count: int = Field(
+        1,
+        description="The number of users who raised complaints related to this feature area and issue."
+    )
+    associated_emails: List[str] = Field(
+        default_factory=list,
+        description="A list of unique emails of users associated with these feedback complaints."
+    )
+    jira_key: Optional[str] = Field(
+        None,
+        description="Jira ticket key if already created (e.g., 'DISC-101'), default is None."
     )
 
 
@@ -113,9 +125,9 @@ def run_analysis_for_model(client: genai.Client, model_name: str, feedback_text:
     # Define prompt instructions for analysis
     prompt = (
         "You are a Principal Software Engineer and AI Product Manager. "
-        "Analyze the following unstructured user feedback records. "
-        "For each feedback record, extract: feature_area, user_segment, severity (1 to 5), "
-        "a 1-sentence product_action roadmap directive, and business_impact. "
+        "Analyze the following unstructured user feedback records. Group similar complaints into a single feature_area. "
+        "For each grouped item, calculate the feedback_count (the number of users reporting this issue) and collect all unique associated_emails (the emails of the users reporting this issue). "
+        "For each grouped item, define the severity (1 to 5), a 1-sentence product_action roadmap directive, and business_impact. "
         "Synthesize all items to write a high-level strategic_focus summary brief.\n\n"
         f"Feedback Records:\n{feedback_text}"
     )
