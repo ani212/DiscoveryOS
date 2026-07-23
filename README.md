@@ -2,13 +2,9 @@
 
 **Author:** Aniket Bhattacharjee
 
-DiscoveryOS is an automated product intelligence engine that parses unstructured customer feedback (support tickets, portal requests, churn surveys) and outputs a quantitative prioritization matrix, along with a presentation-ready markdown dashboard.
+DiscoveryOS is an advanced AI-powered product intelligence platform designed to extract actionable insights from unstructured customer feedback. It automatically processes data from support tickets, portal requests, and surveys to generate a prioritized matrix and a comprehensive markdown dashboard.
 
-It leverages the new `google-genai` SDK and Pydantic (v2) validation models to enforce strict schemas on LLM outputs, including fallback routines and thinking configuration support.
-
-## 🌐 Live Web Portal
-Access the live glassmorphic web dashboard directly:
-👉 **[https://discoveryos-m1v3.onrender.com](https://discoveryos-m1v3.onrender.com)**
+Powered by the latest `google-genai` SDK and Pydantic (v2), it ensures strict schema validation on LLM outputs and features robust fallback mechanisms and model thinking configurations.
 
 ## 🚀 Features
 - **Structured JSON schemas**: Strictly validated via Pydantic v2.
