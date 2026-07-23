@@ -1,5 +1,7 @@
 # DiscoveryOS 🧠
 
+**Author:** Aniket Bhattacharjee
+
 DiscoveryOS is an automated product intelligence engine that parses unstructured customer feedback (support tickets, portal requests, churn surveys) and outputs a quantitative prioritization matrix, along with a presentation-ready markdown dashboard.
 
 It leverages the new `google-genai` SDK and Pydantic (v2) validation models to enforce strict schemas on LLM outputs, including fallback routines and thinking configuration support.
