@@ -6,6 +6,10 @@ DiscoveryOS is an advanced AI-powered product intelligence platform designed to 
 
 Powered by the latest `google-genai` SDK and Pydantic (v2), it ensures strict schema validation on LLM outputs and features robust fallback mechanisms and model thinking configurations.
 
+## 🌐 Live Web Portal
+Access the live glassmorphic web dashboard directly:
+👉 **[https://discovery-os-pi.vercel.app](https://discovery-os-pi.vercel.app)**
+
 ## 🚀 Features
 - **Structured JSON schemas**: Strictly validated via Pydantic v2.
 - **Robust Model Fallbacks**: Automatically fall back to alternative Gemini models if the requested preview model is unavailable.
